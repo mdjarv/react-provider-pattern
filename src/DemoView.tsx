@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchDemo, fetchWithErrorDemo, useDemo} from "./providers/DemoProvider";
+import {fetchAsync, fetchDemo, fetchWithErrorDemo, useDemo} from "./providers/DemoProvider";
 import {Box, Button, Grid, Typography} from "@material-ui/core";
 
 const DemoView: React.FC = () => {
@@ -24,6 +24,9 @@ const DemoView: React.FC = () => {
         </Grid>
         <Grid item>
           <Button color="secondary" variant="contained" onClick={() => fetchWithErrorDemo(dispatch)}>Fetch Fail</Button>
+        </Grid>
+        <Grid item>
+          <Button color="primary" variant="contained" onClick={() => fetchAsync(dispatch)}>Async</Button>
         </Grid>
       </Grid>
     </Box>)

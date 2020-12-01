@@ -62,18 +62,33 @@ const useDemo = (): [State, React.Dispatch<Action>] => {
 
 const fetchDemo = (dispatch: React.Dispatch<Action>): Promise<void> => {
   dispatch({type: 'start fetch'})
-  return api.fetch().then(result => dispatch({type: "finish fetch", result: result})).catch(e => dispatch({
-    type: 'fail fetch',
-    error: e
-  }))
+  return api.fetch()
+    .then(result => dispatch({type: "finish fetch", result: result}))
+    .catch(e => dispatch({
+      type: 'fail fetch',
+      error: e
+    }))
 }
 
 const fetchWithErrorDemo = (dispatch: React.Dispatch<Action>): Promise<void> => {
   dispatch({type: 'start fetch'})
-  return api.failFetch().then(result => dispatch({type: "finish fetch", result: result})).catch(e => dispatch({
-    type: 'fail fetch',
-    error: e
-  }))
+  return api.failFetch()
+    .then(result => dispatch({type: "finish fetch", result: result}))
+    .catch(e => dispatch({
+      type: 'fail fetch',
+      error: e
+    }))
 }
 
-export {DemoProvider, useDemo, fetchDemo, fetchWithErrorDemo}
+const fetchAsync = async (dispatch: React.Dispatch<Action>): Promise<void> => {
+  dispatch({type: 'start fetch'})
+
+  try {
+    const result = await api.fetch()
+    dispatch({type: 'finish fetch', result: result})
+  } catch (e) {
+    dispatch({type: 'fail fetch', error: e})
+  }
+}
+
+export {DemoProvider, useDemo, fetchDemo, fetchWithErrorDemo, fetchAsync}
